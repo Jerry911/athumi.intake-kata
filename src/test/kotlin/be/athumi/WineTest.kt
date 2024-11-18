@@ -173,4 +173,44 @@ class WineTest {
         assertEquals(0, wines[0].price)
         assertEquals(-1, wines[0].expiresInYears)
     }
+
+    @Test
+    fun `test wine with negative price is corrected to zero`() {
+        // Arrange
+        val wine = Wine(name = "Regular Wine", price = -10, expiresInYears = 5)
+        val wineShop = WineShop(listOf(wine))
+
+        // Act
+        wineShop.next()
+
+        // Assert
+        assertEquals(0, wine.price, "The price of wine should not be negative.")
+    }
+
+    @Test
+    fun `test wine with negative expiration years continues to degrade`() {
+        // Arrange
+        val wine = Wine(name = "Regular Wine", price = 10, expiresInYears = -1)
+        val wineShop = WineShop(listOf(wine))
+
+        // Act
+        wineShop.next()
+
+        // Assert
+        assertEquals(8, wine.price, "The price should degrade twice as fast when wine is expired.")
+        assertEquals(-2, wine.expiresInYears, "The expiration years should continue decreasing.")
+    }
+
+    @Test
+    fun `test wine price does not exceed maximum`() {
+        // Arrange
+        val wine = Wine(name = "Bourdeaux Conservato", price = 99, expiresInYears = 5)
+        val wineShop = WineShop(listOf(wine))
+
+        // Act
+        wineShop.next()
+
+        // Assert
+        assertEquals(100, wine.price, "The price should not exceed the maximum limit of 100.")
+    }
 }
