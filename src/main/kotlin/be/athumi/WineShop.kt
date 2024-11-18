@@ -7,7 +7,7 @@ class WineShop(var items: List<Wine>) {
     private val strategies = mapOf(
         "Bourdeaux Conservato" to AgingWineStrategy(),
         "Bourgogne Conservato" to AgingWineStrategy(),
-        "Wine brewed by Alexander the Great" to AlexanderTheGreatWineStrategy(),
+        "Wine brewed by Alexander the Great" to CollectorWineStrategy(),
         "Event" to EventWineStrategy(),
         "EcoBrewed" to EcoBrewedWineStrategy()
     )
