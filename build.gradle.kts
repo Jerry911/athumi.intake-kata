@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm") version "2.0.21"
+    jacoco
 }
 
 repositories {
@@ -11,9 +12,24 @@ repositories {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
     testLogging {
         events("passed", "skipped", "failed")
     }
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)    // Generate XML report for CI integration
+        csv.required.set(false)  // Disable CSV if not needed
+        html.required.set(true)  // Enable HTML for human-readable reports
+    }
+}
+
+// Add jacocoTestReport to the build lifecycle
+tasks.build {
+    dependsOn(tasks.jacocoTestReport)
 }
 
 dependencies {

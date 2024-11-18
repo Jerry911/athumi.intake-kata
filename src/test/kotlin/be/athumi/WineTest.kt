@@ -11,6 +11,14 @@ class WineTest {
     }
 
     @Test
+    fun `Wine should listen to its name`() {
+        val wine = Wine("name", 0, 0)
+        assertEquals(wine.name,"name", "Whine name should be 'name'")
+        wine.name = "new name"
+        assertEquals(wine.name,"new name", "Whine name should be 'new name'")
+    }
+
+    @Test
     fun `a shop without wine is no shop, is it`() {
         val shop = WineShop(listOf(Wine("name", 0, 0)))
 
